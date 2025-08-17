@@ -11,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gray-950 text-gray-100 overflow-x-hidden antialiased">
+      <body
+        className="bg-gray-950 text-gray-100 overflow-x-hidden antialiased"
+        suppressHydrationWarning
+      >
         {/* Accessibility: skip to main content */}
         <a
           href="#main"
@@ -20,10 +23,10 @@ export default function RootLayout({ children }) {
           Skip to content
         </a>
 
-        {/* Global decorative cursor (keeps native cursor visible) */}
+        {/* Global decorative cursor (client-side only) */}
         <CustomCursor />
 
-        {/* Persistent header across all routes — remove page-level Header to avoid duplication */}
+        {/* Persistent header across all routes */}
         <Header />
 
         {/* Page content */}
