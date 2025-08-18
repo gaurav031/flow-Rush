@@ -1,47 +1,123 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 const tools = [
-  { name: 'Recognize', src: '/Recognize.png' },
-  { name: 'Location', src: '/location.png' },
-  { name: 'Backend Tool', src: '/backendTool.png' },
-  { name: 'Database Tool', src: '/DatabaseTool.png' },
-  { name: 'Design Tool', src: '/DesignTool.png' },
-  { name: 'AI Tool', src: '/AiTool.png' }, // moved to last
+  { src: '/Recognize.png' },
+  { src: '/location.png' },
+  { src: '/backendTool.png' },
+  { src: '/DatabaseTool.png' },
+  { src: '/DesignTool.png' },
+  { src: '/AiTool.png' },
 ];
 
 const Tools = () => {
-  return (
-    <section className="bg-[#0b1230] py-20 px-6">
-      {/* Heading */}
-      <div className="text-center mb-16">
-        <h2 className="text-5xl font-extrabold text-white mb-4">⚡ Our Tools</h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Explore powerful tools that help streamline design, databases, and more.
-        </p>
-      </div>
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-      {/* Grid Layout */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {tools.map((tool, i) => (
-          <div
-            key={i}
-            className="relative group bg-black rounded-2xl shadow-lg p-6 flex items-center justify-center hover:shadow-2xl transition"
-          >
-            {/* Bigger Image Box */}
-            <div className="relative w-[320px] h-[320px]">
-              <Image
-                src={tool.src}
-                alt={tool.name}
-                fill
-                className="object-contain transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-          </div>
+  // Auto-advance every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % tools.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevious();
+      } else if (e.key === 'ArrowRight') {
+        goToNext();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + tools.length) % tools.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % tools.length);
+  };
+
+  return (
+    <div className="relative w-full h-screen bg-black overflow-hidden">
+      {tools.map((tool, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <Image
+            src={tool.src}
+            alt=""
+            fill
+            className="object-contain"
+            quality={100}
+            priority={index === currentIndex || index === 0}
+          />
+        </div>
+      ))}
+
+      {/* Navigation arrows */}
+      <button
+        onClick={goToPrevious}
+        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-all"
+        aria-label="Previous image"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        onClick={goToNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 hover:bg-black/50 transition-all"
+        aria-label="Next image"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+
+      {/* Subtle navigation indicators */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {tools.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentIndex ? 'bg-white' : 'bg-white/30'
+            }`}
+            aria-label={`View tool ${index + 1}`}
+          />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

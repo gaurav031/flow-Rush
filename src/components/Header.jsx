@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import Image from 'next/image';
-import { PopupButton } from "react-calendly";
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -29,9 +29,29 @@ const Header = () => {
       setLastScrollY(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  // Smooth scroll handler
+  function handleNav(href) {
+    if (!href) return;
+    if (href.startsWith('#')) {
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      } else {
+        window.location.hash = href;
+      }
+      setIsOpen(false);
+    } else {
+      window.location.href = href;
+      setIsOpen(false);
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -42,29 +62,36 @@ const Header = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ duration: 0.35, ease: 'easeInOut' }}
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] lg:w-[85%] rounded-2xl border border-white/6 bg-transparent backdrop-blur-sm shadow-lg"
-          aria-label="Main navigation"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] lg:w-[85%] 
+          rounded-2xl bg-[#121a3d] border border-white/10" // ✅ lighter than hero (#0b1230)
         >
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-3 items-center py-3">
               {/* LEFT: Logo */}
               <div className="flex items-center justify-start">
-                <a href="#hero" className="flex items-center space-x-2" aria-label="Home">
+                <a
+                  href="#hero"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav('#hero');
+                  }}
+                  className="flex items-center space-x-2"
+                >
                   <Image src="/logo.png" alt="Flowrush Logo" width={140} height={50} priority />
                 </a>
               </div>
 
               {/* CENTER: Nav */}
               <div className="flex items-center justify-center">
-                <nav className="hidden md:flex space-x-8" aria-label="Primary">
+                <nav className="hidden md:flex space-x-8">
                   {navLinks.map((link, i) => (
-                    <a
+                    <button
                       key={i}
-                      href={link.href}
-                      className="text-gray-200 hover:text-white transition text-sm md:text-base"
+                      onClick={() => handleNav(link.href)}
+                      className="text-gray-300 hover:text-white transition text-sm md:text-base bg-transparent border-0"
                     >
                       {link.name}
-                    </a>
+                    </button>
                   ))}
                 </nav>
               </div>
@@ -75,7 +102,11 @@ const Header = () => {
                 <div className="hidden md:flex items-center">
                   <a
                     href="https://calendly.com/sahaj-baveja"
-                    className="px-14 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open('https://calendly.com/sahaj-baveja', '_blank', 'noopener,noreferrer');
+                    }}
+                    className="px-10 py-3 rounded-xl text-white font-medium bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 hover:from-blue-600 hover:via-purple-700 hover:to-pink-600 transition-all shadow-md"
                   >
                     Book a Meeting
                   </a>
@@ -85,8 +116,7 @@ const Header = () => {
                 <div className="md:hidden">
                   <button
                     onClick={toggleMenu}
-                    className="text-gray-200 hover:text-white focus:outline-none"
-                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                    className="text-gray-300 hover:text-white focus:outline-none"
                   >
                     {isOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
                   </button>
@@ -95,7 +125,7 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Mobile menu content */}
+          {/* Mobile menu */}
           <AnimatePresence>
             {isOpen && (
               <motion.div
@@ -103,26 +133,29 @@ const Header = () => {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.28, ease: 'easeInOut' }}
-                className="md:hidden bg-transparent border-t border-white/8 overflow-hidden rounded-b-2xl"
+                className="md:hidden bg-[#121a3d] border-t border-white/10 overflow-hidden rounded-b-2xl"
               >
                 <div className="px-6 pt-4 pb-8 space-y-6">
-                  <nav className="flex flex-col space-y-4" aria-label="Mobile">
+                  <nav className="flex flex-col space-y-4">
                     {navLinks.map((link, i) => (
-                      <a
+                      <button
                         key={i}
-                        href={link.href}
-                        className="text-gray-200 hover:text-white transition py-2 border-b border-white/6"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => handleNav(link.href)}
+                        className="text-gray-300 hover:text-white transition py-2 border-b border-white/10 text-left w-full"
                       >
                         {link.name}
-                      </a>
+                      </button>
                     ))}
                   </nav>
                   <div className="pt-4">
                     <a
                       href="https://calendly.com/sahaj-baveja"
-                      className="block text-center w-full px-10 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open('https://calendly.com/sahaj-baveja', '_blank', 'noopener,noreferrer');
+                        setIsOpen(false);
+                      }}
+                      className="block text-center w-full px-10 py-3 rounded-xl text-white font-medium bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 hover:from-blue-600 hover:via-purple-700 hover:to-pink-600 transition-all shadow-md"
                     >
                       Book a Meeting
                     </a>

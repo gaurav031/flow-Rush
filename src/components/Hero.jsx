@@ -23,7 +23,6 @@ const badges = [
 export default function Hero() {
   return (
     <section
-      // exact gradient you requested
       style={{
         background:
           'linear-gradient(135deg, #020618 0%, #162456 50%, #0F172B 100%)',
@@ -117,15 +116,15 @@ export default function Hero() {
           ))}
         </div>
       </div>
-      {/* Three Dots with Line */}
-<div className="flex items-center justify-center w-full py-10">
-  <div className="relative flex items-center w-40 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent">
-    <div className="absolute left-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
-    <div className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-purple-400"></div>
-    <div className="absolute right-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
-  </div>
-</div>
+
+      {/* Decorative three dots with line */}
+      <div className="flex items-center justify-center w-full py-10">
+        <div className="relative flex items-center w-40 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent">
+          <div className="absolute left-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
+          <div className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-purple-400"></div>
+          <div className="absolute right-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
+        </div>
+      </div>
     </section>
   );
 }
-
