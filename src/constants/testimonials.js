@@ -14,20 +14,5 @@ export const testimonials = [
     image: "/assets/img/testimonial/2.webp"
   },
   // Add more testimonials as needed
-  {
-    stars: 5,
-    text: "The quality and speed of delivery exceeded our expectations...",
-    name: "Marcus Rodriguez",
-    role: "Founder • Digital Innovations Co",
-    project: "iOS & Android App",
-    color: "bg-gradient-to-r from-purple-500 to-indigo-500",
-  },
-  {
-    stars: 5,
-    text: "Their process is smooth, transparent, and fast...",
-    name: "Sophia Lee",
-    role: "CTO • Bright Solutions",
-    project: "Web Platform",
-    color: "bg-gradient-to-r from-pink-500 to-red-500",
-  },
+  
 ];

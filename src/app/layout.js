@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-import CustomCursor from '@/components/CustomCursor';
 import Header from '@/components/Header';
 
 export const metadata = {
@@ -22,9 +21,6 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
-
-        {/* Global decorative cursor (client-side only) */}
-        <CustomCursor />
 
         {/* Persistent header across all routes */}
         <Header />
