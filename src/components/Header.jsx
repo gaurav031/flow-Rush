@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import Image from 'next/image';
-
+import { PopupButton } from "react-calendly";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -14,9 +14,7 @@ const Header = () => {
 
   const navLinks = [
     { name: 'Services', href: '#services' },
-    { name: 'About', href: '#about' },
-    { name: 'Process', href: '#process' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Tools', href: '#tools' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -24,10 +22,8 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        // scrolling down
         setShowHeader(false);
       } else {
-        // scrolling up
         setShowHeader(true);
       }
       setLastScrollY(window.scrollY);
@@ -50,7 +46,6 @@ const Header = () => {
           aria-label="Main navigation"
         >
           <div className="max-w-7xl mx-auto px-6">
-            {/* grid layout: left (logo), center (nav), right (cta / menu) */}
             <div className="grid grid-cols-3 items-center py-3">
               {/* LEFT: Logo */}
               <div className="flex items-center justify-start">
@@ -79,10 +74,10 @@ const Header = () => {
                 {/* Desktop CTA */}
                 <div className="hidden md:flex items-center">
                   <a
-                    href="#contact"
-                    className="px-4 py-2 rounded-lg text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
+                    href="https://calendly.com/sahaj-baveja"
+                    className="px-14 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
                   >
-                    Get Started
+                    Book a Meeting
                   </a>
                 </div>
 
@@ -125,11 +120,11 @@ const Header = () => {
                   </nav>
                   <div className="pt-4">
                     <a
-                      href="#contact"
-                      className="block text-center px-4 py-2 rounded-lg text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
+                      href="https://calendly.com/sahaj-baveja"
+                      className="block text-center w-full px-10 py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
                       onClick={() => setIsOpen(false)}
                     >
-                      Get Started
+                      Book a Meeting
                     </a>
                   </div>
                 </div>

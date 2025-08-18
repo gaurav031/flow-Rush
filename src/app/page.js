@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import ProjectCostCalculator from '@/components/ProjectCostCalculator';
+import Tools from '@/components/Tools';
 import ServiceSlider from '@/components/ServiceSlider';
 import WhiteLabel from '@/components/WhiteLabel';
 import ProcessStep from '@/components/ProcessStep';
@@ -68,8 +68,8 @@ export default function Home() {
           <ServiceSlider />
         </section>
 
-         <section id = "ProjectCost">
-          <ProjectCostCalculator />
+         <section id = "Tools">
+          <Tools />
         </section>
 
         {/* ✅ White Label Section (About) */}
