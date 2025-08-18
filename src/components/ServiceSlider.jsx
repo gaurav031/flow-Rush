@@ -69,7 +69,7 @@ export default function ServiceSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {SERVICES.map((s, i) => {
+          {SERVICES.map((s) => {
             const Icon = s.icon;
             return (
               <motion.article
@@ -84,18 +84,15 @@ export default function ServiceSection() {
                 viewport={{ once: true }}
                 className="relative rounded-2xl bg-white/3 backdrop-blur-sm border border-white/10 p-8 min-h-[430px] flex flex-col"
               >
-                {/* icon badge */}
                 <div className="w-12 h-12 rounded-lg bg-white/6 border border-white/8 flex items-center justify-center mb-6">
                   <div className="w-10 h-10 rounded-md bg-white/3 flex items-center justify-center">
                     <Icon className="text-white/90 w-5 h-5" />
                   </div>
                 </div>
 
-                {/* content */}
                 <h3 className="text-2xl font-semibold mb-3">{s.title}</h3>
                 <p className="text-gray-300 mb-6 flex-0">{s.description}</p>
 
-                {/* points */}
                 <ul className="space-y-3 mt-auto mb-6">
                   {s.points.map((p, idx) => (
                     <li key={idx} className="text-gray-300 flex items-start gap-3">
@@ -105,26 +102,25 @@ export default function ServiceSection() {
                   ))}
                 </ul>
 
-                {/* bottom accent line */}
                 <div className="mt-4">
                   <div className={`w-16 h-1 rounded-full ${s.accent}`} />
                 </div>
 
-                {/* soft inner border using absolute pseudo effect */}
                 <div className="pointer-events-none absolute inset-0 rounded-2xl border border-white/5 mix-blend-overlay" />
               </motion.article>
             );
           })}
         </div>
       </div>
-      {/* Three Dots with Line */}
-<div className="flex items-center justify-center w-full py-10">
-  <div className="relative flex items-center w-40 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent">
-    <div className="absolute left-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
-    <div className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-purple-400"></div>
-    <div className="absolute right-1/4 w-2 h-2 rounded-full bg-purple-400"></div>
-  </div>
-</div>
+
+      {/* Decorative three dots with line */}
+      <div className="flex items-center justify-center w-full py-10">
+        <div className="relative flex items-center w-40 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent">
+          <div className="absolute left-1/4 w-2 h-2 rounded-full bg-purple-400" />
+          <div className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-purple-400" />
+          <div className="absolute right-1/4 w-2 h-2 rounded-full bg-purple-400" />
+        </div>
+      </div>
     </section>
   );
 }

@@ -68,7 +68,8 @@ export default function Home() {
           <ServiceSlider />
         </section>
 
-         <section id = "Tools">
+        {/* ✅ Tools Section */}
+         <section id = "tools">
           <Tools />
         </section>
 
