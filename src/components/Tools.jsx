@@ -4,8 +4,6 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const tools = [
-  { src: '/Recognize.png' },
-  { src: '/location.png' },
   { src: '/backendTool.png' },
   { src: '/DatabaseTool.png' },
   { src: '/DesignTool.png' },
